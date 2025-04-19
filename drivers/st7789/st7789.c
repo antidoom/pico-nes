@@ -29,6 +29,12 @@
 
 // 126MHz SPI
 #define SERIAL_CLK_DIV 3.0f
+#define MADCTL_MY  (1 << 7) // Row Address Order (Y flip)
+#define MADCTL_MX  (1 << 6) // Column Address Order (X flip)
+#define MADCTL_MV  (1 << 5) // Row / Column Exchange (swap X and Y)
+#define MADCTL_ML  (1 << 4) // Vertical Refresh Order
+#define MADCTL_BGR (1 << 3) // BGR / RGB order (1 = BGR)
+#define MADCTL_MH  (1 << 2) // Horizontal Refresh Order
 #define MADCTL_BGR_PIXEL_ORDER (1<<3)
 #define MADCTL_ROW_COLUMN_EXCHANGE (1<<5)
 #define MADCTL_COLUMN_ADDRESS_ORDER_SWAP (1<<6)
@@ -58,14 +64,23 @@ static const uint8_t init_seq[] = {
     2, 2, 0x3a, 0x55, // Set colour mode to 16 bit
 #ifdef ILI9341
     // ILI9341
+    #ifdef INVERSION
+    // ILI9341: переворот и инверсия цветов
+    2, 0, 0x36, MADCTL_MY | MADCTL_MX | MADCTL_ROW_COLUMN_EXCHANGE | MADCTL_BGR_PIXEL_ORDER, // flip + BGR
+    #else
     2, 0, 0x36, MADCTL_ROW_COLUMN_EXCHANGE | MADCTL_BGR_PIXEL_ORDER, // Set MADCTL
+    #endif
 #else
     // ST7789
     2, 0, 0x36, MADCTL_COLUMN_ADDRESS_ORDER_SWAP | MADCTL_ROW_COLUMN_EXCHANGE, // Set MADCTL
 #endif
     5, 0, 0x2a, 0x00, 0x00, SCREEN_WIDTH >> 8, SCREEN_WIDTH & 0xff, // CASET: column addresses
     5, 0, 0x2b, 0x00, 0x00, SCREEN_HEIGHT >> 8, SCREEN_HEIGHT & 0xff, // RASET: row addresses
+#ifdef INVERSION
+    1, 2, 0x21, // Inversion ON
+#else
     1, 2, 0x20, // Inversion OFF
+#endif
     1, 2, 0x13, // Normal display on, then 10 ms delay
     1, 2, 0x29, // Main screen turn on, then wait 500 ms
     0 // Terminate list

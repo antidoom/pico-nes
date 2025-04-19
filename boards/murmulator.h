@@ -17,8 +17,10 @@
 
 // NES Gamepad
 #define NES_GPIO_CLK 14
-#define NES_GPIO_DATA 16
 #define NES_GPIO_LAT 15
+#define NES_GPIO_DATA 16
+
+//#define NES_GPIO_DATA 28
 
 // VGA 8 pins starts from pin:
 #define VGA_BASE_PIN 6
