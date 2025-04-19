@@ -7,6 +7,7 @@
 #endif
 
 #define ZERO 1
+#define CPU_FREQ 252
 
 // SDCARD
 #define SDCARD_PIN_SPI0_SCK 18
@@ -43,13 +44,14 @@
 
 // Sound
 #if defined(AUDIO_PWM)
-#define AUDIO_PWM_PIN 15
+#define AUDIO_PWM_PIN 11
 /// TODO: remove it
-#define AUDIO_DATA_PIN 15
-#define AUDIO_CLOCK_PIN 2
+#define AUDIO_DATA_PIN 11
+#define AUDIO_CLOCK_PIN 12
+#define AUDIO_LCK_PIN 13
 #else
 // I2S Sound
-#define AUDIO_DATA_PIN 15
-#define AUDIO_CLOCK_PIN 2
-#define AUDIO_LCK_PIN 3
+#define AUDIO_DATA_PIN 11
+#define AUDIO_CLOCK_PIN 12
+#define AUDIO_LCK_PIN 13
 #endif

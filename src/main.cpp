@@ -1257,12 +1257,12 @@ int main() {
     vreg_set_voltage(VREG_VOLTAGE_1_60);
     sleep_ms(33);
     *qmi_m0_timing = 0x60007204;
-    set_sys_clock_khz(378 * KHZ, 0);
+    set_sys_clock_khz(CPU_FREQ * KHZ, 0);
     *qmi_m0_timing = 0x60007303;
 #else
     hw_set_bits(&vreg_and_chip_reset_hw->vreg, VREG_AND_CHIP_RESET_VREG_VSEL_BITS);
     sleep_ms(10);
-    set_sys_clock_khz(378 * KHZ, true);
+    set_sys_clock_khz(CPU_FREQ * KHZ, true);
 #endif
 
     gpio_init(PICO_DEFAULT_LED_PIN);
