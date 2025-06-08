@@ -5,6 +5,8 @@
 #include "boards/pico.h"
 #endif
 
+#define CPU_FREQ 378
+
 // 16MB flash
 #define PICO_FLASH_SIZE_BYTES 16777216
 // SDCARD
